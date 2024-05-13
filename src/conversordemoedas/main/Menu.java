@@ -1,19 +1,22 @@
 package conversordemoedas.main;
-
+import conversordemoedas.models.Currency;
 import conversordemoedas.utils.ConvertCurrency;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
     Scanner scan = new Scanner(System.in);
     double amountToConvert;
-
+    List<Currency> history = new ArrayList<>();
 
     public void showMenu () {
 
         Scanner scan = new Scanner(System.in);
         double amountToConvert;
         int choice;
+        Currency currency = null;
 
         do {
             System.out.println(menu());
@@ -21,65 +24,94 @@ public class Menu {
 
             switch (choice) {
                 case 1:
-
-                    ConvertCurrency.checkConvertionRate("USD", "BRL", scan);
-
+                    currency = ConvertCurrency.
+                                checkConvertionRate("USD", "BRL", scan);
+                    System.out.println(currency);
+                    history.add(currency);
                     break;
                 case 2:
-//                    Conversor.converterMoeda("BRL", "USD", scan);
-//                    break;
-//                case 3:
-//                    Conversor.converterMoeda("USD", "ARS", scan);
-//                    break;
-//                case 4:
-//                    Conversor.converterMoeda("ARS", "USD", scan);
-//                    break;
-//                case 5:
-//                    Conversor.converterMoeda("USD", "COP", scan);
-//                    break;
-//                case 6:
-//                    Conversor.converterMoeda("COP", "USD", scan);
-//                    break;
-//                case 7:
-//                    DigitarMoeda.digitar(scan);
-//                    break;
-//                case 8:
-//                    System.out.println("Saindo...");
-//                    break;
-                default:
-                    System.out.println("*********************** - ERRO - *******************************");
-                    System.out.println("Opção inválida.");
-                    System.out.println("****************************************************************");
+                    currency = ConvertCurrency.
+                            checkConvertionRate("BRL", "USD", scan);
+                    System.out.println(currency);
+                    history.add(currency);
+                    break;
+                case 3:
+                    currency = ConvertCurrency.
+                            checkConvertionRate("USD", "ARS", scan);
+                    System.out.println(currency);
+                    history.add(currency);
+                    break;
+                case 4:
+                    currency = ConvertCurrency.
+                            checkConvertionRate("ARS", "USD", scan);
+                    System.out.println(currency);
+                    history.add(currency);
+                    break;
+                case 5:
+                    currency = ConvertCurrency.
+                            checkConvertionRate("USD", "COP", scan);
+                    System.out.println(currency);
+                    history.add(currency);
+                    break;
+                case 6:
+                    currency = ConvertCurrency.
+                            checkConvertionRate("COP", "USD", scan);
+                    System.out.println(currency);
+                    history.add(currency);
+                    break;
+                case 7:
+                    System.out.println("Digite o código da moeda de origem em letras maiúsculas");
+                    String originCurrency = scan.next();
 
-                    // Após exibir o resultado, aguarda a entrada do usuário para retornar ao menu principal
-                    System.out.println("\nPressione Enter para voltar ao menu principal...");
+                    System.out.println("Digite o código da moeda de destino em letras maiúsculas");
+                    String convertedCurrency = scan.next();
+
+                    currency = ConvertCurrency.
+                            checkConvertionRate(originCurrency, convertedCurrency, scan);
+                    System.out.println(currency);
+                    history.add(currency);
+                    break;
+                case 8:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("""
+                    *********************** - ERRO - *******************************
+                    
+                                         Opção inválida
+                   
+                            Pressione 'Enter' para voltar ao menu principal
+                    
+                    ****************************************************************
+                    
+                    """);
                     scan.nextLine(); // Limpa o buffer
                     scan.nextLine(); // Aguarda a entrada do usuário
             }
 
-        } while ( choice != 8);
+            System.out.println("Deseja continuar consultando conversões?");
+            System.out.println("       s - SIM   |   n - Não");
+            char exit =  scan.next().toLowerCase().charAt(0);
+            if (exit == 'n'){
+                break;
+            }
 
+        } while ( choice != 8);
         scan.close();
         System.exit(1);
     }
+
     private String menu(){
         String menu = """
-                
-                ****************************************************************
-                
                 ----------------------------------------------------------------
                 
-                         Seja bem-vindo(a) ao Conversor de Moedas!");
-
-                ----------------------------------------------------------------
-                
-                1) Dólar >> Real Brasileiro
-                2) Real Brasileiro =>> Dólar
-                3) Dólar >> Peso Argentino
-                4) Peso Argentino =>> Dólar
-                5) Dólar >> Peso Colombiano
-                6) Peso Colombiano =>> Dólar
-                7) Digitar moeda de origem, destino e valor
+                1) De Dólar para Real Brasileiro
+                2) De Real Brasileiro para Dólar
+                3) De Dólar para Peso Argentino
+                4) De Peso Argentino para Dólar
+                5) De Dólar para Peso Colombiano
+                6) De Peso Colombiano para Dólar
+                7) Digitar moeda de origem e destino que não tenha na lista
                 8) Sair
 
                 Escolha uma opção válida:
@@ -87,8 +119,7 @@ public class Menu {
         return menu;
     }
 
-    private void amountToConvertMsg(){
-        System.out.println("Digite o valor que deseja converter: ");
-        amountToConvert = scan.nextDouble();
+    public List<Currency> exportList (){
+        return this.history;
     }
 }

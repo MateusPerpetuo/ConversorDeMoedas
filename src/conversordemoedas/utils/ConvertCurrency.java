@@ -1,5 +1,4 @@
 package conversordemoedas.utils;
-
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.io.InputStream;
@@ -8,10 +7,11 @@ import java.util.Scanner;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import conversordemoedas.models.Currency;
 
 public class ConvertCurrency {
 
-    public static String checkConvertionRate(String currencyBaseCode,
+    public static Currency checkConvertionRate(String currencyBaseCode,
                                            String convertedCurrencyCode, Scanner scan) {
         try {
 
@@ -28,6 +28,9 @@ public class ConvertCurrency {
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
             JsonObject jsonobj = root.getAsJsonObject();
 
+            // Accessing object
+            String req_result = jsonobj.get("result").getAsString();
+            String req_lasUpdate = jsonobj.get("time_next_update_utc").getAsString();
             JsonObject conversionRates = jsonobj.getAsJsonObject("conversion_rates");
 
             if ( !conversionRates.has(convertedCurrencyCode)) {
@@ -35,24 +38,17 @@ public class ConvertCurrency {
                 return null;
             }
 
-            // Accessing object
-            String req_result = jsonobj.get("result").getAsString();
-
             System.out.println("Digite quanto de " + currencyBaseCode
                             + " você deseja converter para "+ convertedCurrencyCode + ": ");
             double amountToConvert = scan.nextDouble();
 
+            double convertedAmountCurrent = amountToConvert * conversionRates
+                                            .get(convertedCurrencyCode).getAsDouble();
 
+            Currency currency = new Currency( req_lasUpdate, currencyBaseCode, convertedCurrencyCode,
+                                                amountToConvert, convertedAmountCurrent);
 
-
-
-
-
-
-
-
-
-            return req_result;
+            return currency;
 
         } catch (Exception e) {
             throw new RuntimeException("Ocorreu um erro! Incapaz de conectar com o servidor.");

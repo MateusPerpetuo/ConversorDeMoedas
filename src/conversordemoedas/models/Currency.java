@@ -10,11 +10,33 @@ public class Currency {
 
     // Contructors
 
-    public Currency(String base_code, String lastUpdate) {
-        this.currencyBaseCode = base_code;
-        this.lastUpdate = lastUpdate;
+    public Currency(String lastUpdate, String currencyBaseCode, String convertedCurrencyCode,
+                    double amountToConvert, double convertedAmount) {
+        this.lastUpdate = lastUpdate.substring(5,lastUpdate.length()-5);
+        this.currencyBaseCode = currencyBaseCode;
+        this.convertedCurrencyCode = convertedCurrencyCode;
+        this.amountToConvert = amountToConvert;
+        this.convertedAmount = convertedAmount;
     }
 
+    // Methods
+
+    @Override
+    public String toString() {
+        String msg = String.format( """
+                Conversão realizada de %s para %s
+                
+                Moeda Inicial: %s
+                Moeda Destino: %s
+                Valor inicial: $%.2f %s
+                Valor convertido: $%.2f %s
+                
+                Dados atualizado em %s
+                """, this.currencyBaseCode, this.convertedCurrencyCode, this.currencyBaseCode,
+                     this.convertedCurrencyCode, this.amountToConvert, this.currencyBaseCode,
+                     this.convertedAmount, this.convertedCurrencyCode, this.lastUpdate);
+        return msg;
+    }
 
     // Getters and setters
 
