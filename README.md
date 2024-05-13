@@ -1,6 +1,12 @@
 # Challenge ONE: Conversor de Moedas | Alura - ONE Oracle Next Education T6
   ![Static Badge](https://img.shields.io/badge/v.17%20-%20gray?logo=oracle&logoColor=white&label=Java&labelColor=%23f89820&color=%235382a1%20)   ![Static Badge](https://img.shields.io/badge/v.2.10.1%20-%20gray?logo=google&logoColor=white&logoSize=auto&label=Gson&labelColor=%20%234285f4%20&color=%23ea4335) 
 
+<h3 align="center">Badge de conclusão do desafio
+  <p align="center">
+    <img src="https://pbs.twimg.com/media/GLS5lQFW8AA-QQP.png" alt="Calculadora de Conversão de Moedas">
+  </p>
+</h3> 
+
   
 ## O que é o projeto?
 
