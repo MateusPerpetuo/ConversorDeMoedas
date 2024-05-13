@@ -1,22 +1,13 @@
 package conversordemoedas.main;
 
-import conversordemoedas.models.Currency;
-import conversordemoedas.utils.SaveFiles;
-import java.util.List;
+import java.io.IOException;
 
 public class Main{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         startMsg();
         Menu menu = new Menu();
         menu.showMenu();
-
-        List<Currency> history = menu.history;
-
-
-        var fileSaver = new SaveFiles();
-        // fileSaver.saveJson(menu.exportList());
-        System.out.println(history.toString());
         endMsg();
 
     }
@@ -33,9 +24,11 @@ public class Main{
 
     private static void endMsg(){
         System.out.println("""
+       
+                      --      Pesquisa concluida!     --
         
-        
-                 
+               Não se esqueça de conferir o arquivo que foi
+               gerado com todos os resultados de suas pesquisas.
         
         ----------------------------------------------------------------
         
